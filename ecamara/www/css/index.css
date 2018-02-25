@@ -1,0 +1,47 @@
+*{
+    margin: 0;
+    font-family: Lora, serif, arial;
+}
+h2{
+    font-family: Lora, serif, arial;
+}
+header{
+    text-align: center;
+    margin-bottom: 5px;
+}
+div.imglogo{
+    background: url('../../imagens/brasao.png') no-repeat;
+    color: transparent;
+    margin-left: 5px;
+    width: 40px;
+    float: left;
+}
+div#nome{
+     width: 89%;
+}
+
+button.opçao{
+     width: 80%;
+     text-align:center;
+     margin-left: 10%;
+     border-radius: 5%;
+     margin-bottom: 3px;
+}
+.hidden{
+    display :none;
+}
+.page{
+    position:absolute;
+    width: 100%;
+    height: 100%;
+    overflow:auto;
+}
+#login{
+    background-color: lightblue;
+}
+#inicio{
+    background-color: lightgray;
+
+}
+
+
