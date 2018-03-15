@@ -1,1 +1,1 @@
-Projeto desafio e-câmara.
+Projeto desafio e-câmara. Desenvolvido utilizando phonegap/cordova php e mysql.
