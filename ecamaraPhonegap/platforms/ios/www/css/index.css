@@ -1,0 +1,132 @@
+*{
+    margin: 0;
+    font-family: Lora, serif, arial;
+}
+h2{
+    font-family: Lora, serif, arial;
+    margin left:-20px;
+}
+header{
+    margin-bottom: 15px;
+    z-index: 2;
+}
+div.imglogo{
+    background: url('../../imagens/brasao.png') no-repeat;
+    color: transparent;
+    margin-left: 15px;
+    width: 40px;
+    float: left;
+}
+div#nome{
+     width: 80%;
+     margin-left: 10%;
+     text-align:center;
+ }
+button.opçao{
+     width: 80%;
+     text-align:center;
+     margin-left: 10%;
+     margin-bottom: 3px;
+}
+.btn-primary{
+  box-shadow: 1px 1px 1px black;
+}
+button.logInOut{
+  box-shadow: 1px 2px 2px gray;
+}
+input.green, .btn:hover{
+    background-color: #6ab04c;
+    color: white;
+}
+button.green{
+    background-color: #6ab04c;
+    color: white;
+}
+.page{
+    position:absolute;
+    width: 100%;
+    height: 100%;
+    overflow:auto;
+    display:none;
+}
+#entrar{
+    text-align: center;
+    z-index: 2;
+}
+#cadastrar{
+    text-align: center;
+}
+div.formulario{
+    z-index: 3;
+    background: #686de0;
+}
+div.conteudo{
+    width: 80%;
+    margin-left: 10%;
+    text-align:justify;
+}
+input.inputs{
+    margin-top: 10px;
+}
+#inicio{
+    background:#686de0;
+    display: block;
+}
+#descricao{
+   background: #686de0;
+   color: white;
+}
+#comunicar{
+   background: #686de0;
+   color: white;
+   height: 150%;
+}
+#stream{
+   background: #686de0;
+   color: white;
+}
+input#btnAssistir{
+  float: center;
+  width: 50%;
+  margin-left: 25%;
+  color: white;
+  box-shadow: 1px 1px 1px black;
+  display: inline-block;
+}
+button#btnBack{
+   display: none;
+   width: 30%;
+   position: fixed;
+   bottom: 10px;
+   z-index: 9;
+   margin-left: 10px;
+
+}
+button#btnSobre{
+    margin-top: 5px;
+}
+button.logInOut{
+    float: center
+}
+div#bemVindo{
+    display: none;
+}
+select{
+  color: black;
+  margin-bottom: 5px;
+  
+}
+textarea{
+  color: black;
+  width: 100%;
+  height: 150px;
+}
+input#assunto{
+  color: black;
+  margin-bottom: 5px;
+}
+button#btnSair{
+  margin-top: 5px;
+  
+}
+

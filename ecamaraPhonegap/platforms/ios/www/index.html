@@ -1,0 +1,280 @@
+
+<!DOCTYPE html>     
+<html lang="pt-br">     
+<head>        
+<meta charset="utf-8">        
+<meta http-equiv="X-UA-Compatible" content="IE=edge">         
+<meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />    
+<meta name="format-detection" content="telephone=no" />
+<meta name="msapplication-tap-highlight" content="no" />              
+<title>E-câmara</title>                   
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"> 
+<link href='https://fonts.googleapis.com/css?family=Lora:400italic' rel='stylesheet' type='text/css'>
+<link href="css/index.css" rel="stylesheet">
+<script
+  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous">
+</script>
+<script>
+      window.onload = function(){
+        document.getElementById("btnEnviar").onclick = validar;
+      }
+      
+      function validar(){
+        var msg = "";
+        if (document.getElementById("txtNome").value == ""){
+          msg += "Nome;\n";
+        }       
+        if (document.getElementById("txtEmail").value == ""){
+          msg += "Email;\n";
+        }
+        if (document.getElementById("txtSenha").value == ""){
+          msg += "Senha;\n";
+        }
+        if (document.getElementById("txtSobrenome").value == ""){
+          msg += "Sobrenome;\n";
+        }
+        if (msg == ""){
+          return true;
+        }else{
+          msg = "Os dados abaixo são obrigatórios: \n" + msg;
+          alert(msg);
+          return false;
+        }       
+      }
+
+</script> 
+<script>
+
+$(document).ready(function () {
+  //tratativas usuario logado
+  var user = window.localStorage.getItem('usuario');
+  var userEmail = window.localStorage.getItem('emailUsuario');
+  if(userEmail != null){
+    document.getElementById("hddEmail").value = userEmail;
+  }
+  if(user != null){
+    document.getElementById("hddName").value = user;
+  }
+  //tratativas de comunicação json para o php da pagina de cadastro 
+  $("#btnEnviar").on('click',function(){
+  var txtNome=$("#txtNome").val();
+  var txtSobrenome=$("#txtSobrenome").val();
+  var txtEmail=$("#txtEmail").val();
+  var txtSenha=$("#txtSenha").val();
+  var dataString="&txtNome="+txtNome+"&txtSobrenome="+txtSobrenome+"&txtEmail="+txtEmail+"&txtSenha="+txtSenha;
+  if($.trim(txtNome).length>0){
+
+   $.ajax({
+   type: "POST",
+   url:"http://localhost/ecamaraProjeto/ecamara/ecamaraphonegap/php/incluir.php",
+   data: dataString,
+   crossDomain: true,
+   cache: false,
+   beforeSend: function(){ $("#btnEnviar").val('Connecting...');},
+   success: function(data){
+   if(data=="success")
+   {
+   $("#btnEnviar").val('submit');
+   alert("dados cadastrados com sucesso");
+   window.location = "http://localhost/ecamaraProjeto/ecamara/ecamaraphonegap/www/index.html";
+   }
+   else if(data=="error"){
+   alert("error");
+   }
+   }
+   });
+   }return false;
+   });
+
+//tratativas de exibição de telas
+function turnOn (){
+    $("#btnSobre").on('click', function () {
+      $(".page").css("display", "none");
+      $("#descricao").css("display", "block");
+      $("#btnBack").css("display", "block");
+})
+    $("#btnEntrar").on('click', function () {
+      $(".page").css("display", "none");
+      $("#entrar").css("display", "block");
+      $("#btnBack").css("display", "block");
+      $("#entrarCadastrar").css("display", "none");
+})
+    $("#btnCadastrar").on('click', function () {
+      $(".page").css("display", "none");
+      $("#cadastrar").css("display", "block");
+      $("#btnBack").css("display", "block");
+      $("#entrarCadastrar").css("display", "none");
+})
+    $("#btnBack").on('click', function () {
+      $(".page").css("display", "none");
+      $("#inicio").css("display", "block");
+      $("#btnBack").css("display", "none");
+      $("#entrarCadastrar").css("display", "block");
+   var user = window.localStorage.getItem('usuario');
+   if (user !== null) {
+      $("#entrarCadastrar").css("display", "none");
+	}else{
+	  	$("#entrarCadastrar").css("display", "block");
+	}
+})
+    $("#btnComunicar").on('click', function () {
+      var user = window.localStorage.getItem('usuario');
+      if (user !== null) {
+      	$(".page").css("display", "none");
+      	$("#comunicar").css("display", "block");
+      	$("#btnBack").css("display", "block");
+	  }else{
+	  	alert('É necessario \'entrar\' para falar com a câmara');
+	  }
+})
+    $("#btnStream").on('click', function () {
+      $(".page").css("display", "none");
+      $("#stream").css("display", "block");
+      $("#btnBack").css("display", "block");
+})
+    $("#btnMsg").on('click', function () {
+     if (document.getElementById("textEmail").value == "" || document.getElementById("assunto").value == ""){
+          alert('Preencha o campo de assunto e de mensagem para enviar.');
+          return false;
+        }else{
+        	return true;
+        }
+})
+
+    var user = window.localStorage.getItem('usuario');
+    if (user !== null) {
+         $('#bemVindo').css('display','block');
+         $('#bemVindoNome').html('<h4>Bem vindo,</h4><h4>' + user + '</h4>');
+         $('#entrarCadastrar').css('display','none');
+          }
+
+    $("#btnSair").on('click', function () {
+      user = null;
+})
+ 
+
+}
+turnOn();
+});
+
+</script>
+
+
+
+</head>
+    <body>
+
+        <header>
+            <div class="navbar-brand imglogo">logo</div>
+            <div id="nome">
+            <h2>E - câmara</h2> 
+            <div id="bemVindo"><div id="bemVindoNome"></div> &nbsp<a href="http://localhost/ecamaraProjeto/ecamara/ecamaraphonegap/php/sair.php"><button id="btnSair"  class="logInOut">Sair</button></a></div>           
+            <div id="entrarCadastrar">
+            <button id="btnEntrar" class="logInOut">Entrar</button>
+            <button id="btnCadastrar" class="logInOut">Cadastrar-se</button><br>
+            </div>
+            </div>
+        </header>
+            
+            <button id="btnBack">
+                <h3>voltar</h3>
+            </button>
+            
+
+        <div id="inicio" class="page">
+
+            <button id="btnSobre" class="btn opçao">
+                <h3>Sobre</h3>
+            </button>
+
+            <button id="btnComunicar" class="btn opçao">
+                <h3>Fale com a câmara</h3>
+            </button>
+
+            <button id="btnStream" class="btn opçao">
+                <h3>Assista à transmissão</h3>
+            </button>
+
+        </div>
+        
+
+        <div id="entrar" class="page formulario">
+          <form method="post" action="http://localhost/ecamaraProjeto/ecamara/ecamaraphonegap/php/validarAcesso.php">
+            <input class="inputs" type="email" placeholder="Digite seu Email" name="email" size="30" maxlength="50"><br>
+            <input class="inputs" type="password" placeholder="Digite sua senha" name="senha" size="30" maxlength="50"><br><br>
+            <div >&nbsp &nbsp<input class="btn btn-primary green" type="submit" id="btnLogando" value="Entrar"></div><br>
+     
+            </form>
+        <a href="https://www.facebook.com/v2.2/dialog/oauth?client_id=857844974394585&state=92484c5e7a7ce1a7d13d4276028b92dd&response_type=code&sdk=php-sdk-5.6.2&redirect_uri=http%3A%2F%2Flocalhost%2FecamaraProjeto%2Fecamara%2FecamaraPhonegap%2Fphp%2Fcallback.php&scope=email"><button type="button" class="btn btn-primary face">Entrar com facebook</button></a>
+        </div>
+
+        <div id="cadastrar" class="page formulario">
+            
+          <div  id="formCadastro">
+            <input id="txtNome" class="inputs" type="text" name="txtName" placeholder="Digite seu nome" size="30" maxlength="30" value=""><br>
+            <input id="txtSobrenome" class="inputs" type="text" name="txtLastName" placeholder="Digite seu sobrenome" size="30" maxlength="50" value=""><br>
+            <input id="txtEmail" class="inputs" type="email" name="txtEmail" placeholder="Digite seu Email" size="30" maxlength="50" value=""><br>
+            <input id="txtSenha" class="inputs" type="password" name="txtSenha" placeholder="Digite sua senha" size="30" maxlength="50" value=""><br><br>
+            <div >&nbsp &nbsp<input class="btn btn-primary green" type="submit" id="btnEnviar" value="Cadastrar-se"></div><br>
+ 			
+          </div>
+            
+        </div>
+
+        <div id="descricao" class="page">
+          <div class="conteudo">
+            <h4>&nbsp Este aplicativo tem a intenção de promover a transparência da Câmara Municipal de Taquaritinga para com os cidadãos, além de facilitar a comunicação. </h4>
+          </div>
+        </div>
+
+        <div id="comunicar" class="page">
+        	<div class="conteudo ">
+        		<br><label>Selecione o destinatário:</label><br>
+	       <select name="emailSelect" form="emailForm">
+				  <option value="ouvidoria@camarataquaritinga.sp.gov.br" selected>Câmara Taquaritinga Ouvidoria</option>
+				  <option value="antoniovidal@camarataquaritinga.sp.gov.br" >Antonio Vidal da SIlva</option>
+				  <option value="professorcaio@camarataquaritinga.sp.gov.br" >Caio Edivan Ribeiro Porto</option>
+				  <option value="mirao@camarataquariinga.sp.gov.br" >Claudemir Sebastião Basso</option>
+				  <option value="denis@camarataquaritinga.sp.gov.br" >Denis Eduardo Machado</option>
+				  <option value="moutinho@camarataquaritinga.sp.gov.br" >Eduardo Henrique Moutinho</option>
+				  <option value="genesio@camarataquaritinga.sp.gov.br" >Genésio Aparecido Valensio</option>
+				  <option value="gilberto@camarataquaritinga.sp.gov.br" >Gilberto Junqueira</option>
+				  <option value="depietro@camarataquaritinga.sp.gov.br" >José Rodrigo de Pietro</option>
+				  <option value="lourencano@camarataquaritinga.sp.gov.br" >Marcos Aparecido Lourençano</option>
+				  <option value="bonilla@camarataquaritinga.sp.gov.br" >Marcos Rui Gomes Marona</option>
+				  <option value="juninhoprevidelli@camarataquaritinga.sp.gov.br" >Orides Previdelli Júnior</option>
+				  <option value="wadinho@camarataquariinga.sp.gov.br" >Oswaldo Peretti Neto</option>
+				  <option value="valcir@camarataquariinga.sp.gov.br" >Valcir Conceição Zacarias</option>
+				  <option value="angelim@camarataquaritinga.sp.gov.br" >Angelo Bartholomeu</option>
+				  <option value="edermineiro@camarataquaritinga.sp.gov.br" >Eder Corrêa de Oliveira</option>
+				</select>
+				<br>
+				<form method="post" enctype="multipart/form-data" action="http://localhost/ecamaraProjeto/ecamara/ecamaraphonegap/php/mail.php" id="emailForm">
+				  <input type="hidden" id="hddName" name="hddName" value="">
+				  <input type="hidden" id="hddEmail" name="hddEmail" value="">
+				  <input id="assunto" class="inputs" type="text" name="assunto" placeholder="Digite o assunto" size="30" maxlength="30">
+				  <textarea id="textEmail" class="inputs" type="text" name="emailMsg" placeholder="Digite sua mensagem" size="100" maxlength="3000" ></textarea>
+				  <input name="arquivo" type="file"><br>
+				  <input class="btn btn-primary green" type="submit" id="btnMsg" value="Enviar">
+				</form>
+            </div>
+        </div>
+
+        <div id="stream" class="page">
+        	<div class="conteudo">
+        		<h4>&nbsp A trasmissão da sessão da câmara somente entrará ao vivo às segundas-feiras, entre 19:30 horas e 22:30 horas.</h4>
+        		<input id="btnAssistir" class="btn green" type="submit" value="Assistir" onclick="window.open('https://player.jmvstream.com/6TkFNb3J9igpAQDq1LLvkmrCVKKv0h', '_system');"> 
+            
+            </div>
+        </div>
+        
+        <script src="cordova.js"></script>
+        <script src="js/index.js"></script>
+         <script>
+          app.initialize();
+         </script>
+        
+    </body>
+</html>
