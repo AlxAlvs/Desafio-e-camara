@@ -15,7 +15,7 @@ header{
     z-index: 2;
 }
 div.imglogo{
-    background: url('brasao.png') no-repeat;
+    /*background: url('brasao.png') no-repeat;*/
     color: transparent;
     margin-left: 15px;
     width: 40px;
@@ -26,12 +26,6 @@ div#nome{
      margin-left: 10%;
      text-align:center;
  }
-button.opçao{
-     width: 80%;
-     text-align:center;
-     margin-left: 10%;
-     margin-bottom: 3px;
-}
 .btn-primary{
   box-shadow: 1px 1px 1px black;
 }
@@ -62,7 +56,7 @@ button.green{
 }
 div.formulario{
     z-index: 3;
-    background: #686de0;
+    background: #3B3B98;
 }
 div.conteudo{
     width: 80%;
@@ -73,20 +67,20 @@ input.inputs{
     margin-top: 10px;
 }
 #inicio{
-    background:#686de0;
     display: block;
+    background: url('brasaoFundo.jpg') no-repeat;
 }
 #descricao{
-   background: #686de0;
+   background:#1e3799;
    color: white;
 }
 #comunicar{
-   background: #686de0;
+   background:#1e3799;
    color: white;
    height: 150%;
 }
 #stream{
-   background: #686de0;
+   background:#1e3799;
    color: white;
 }
 input#btnAssistir{
@@ -185,4 +179,19 @@ input#google{
   margin-top: 10px;
   background-color: rgb(255, 51, 51);
   width: 50%;
+}
+button.whiteButton{
+  background-color: white;
+  color: black;
+  border: solid black 2px;
+}
+button.opçao,.opçao:visited,.opçao:target,.opçao:hover,.opçao:active{
+  width: 80%;
+  text-align:center;
+  margin-left: 10%;
+  margin-bottom: 5px;
+  background-color: rgba(0, 0, 0, 0.75);
+  border: solid black 1px;
+  box-shadow: 1px 1px 1px black;
+  color: white;
 }
