@@ -26,12 +26,6 @@ div#nome{
      margin-left: 10%;
      text-align:center;
  }
-button.opçao{
-     width: 80%;
-     text-align:center;
-     margin-left: 10%;
-     margin-bottom: 3px;
-}
 .btn-primary{
   box-shadow: 1px 1px 1px black;
 }
@@ -185,4 +179,19 @@ input#google{
   margin-top: 10px;
   background-color: rgb(255, 51, 51);
   width: 50%;
+}
+button.whiteButton{
+  background-color: white;
+  color: black;
+  border: solid black 2px;
+}
+button.opçao,.opçao:visited,.opçao:target,.opçao:hover,.opçao:active{
+     width: 80%;
+     text-align:center;
+     margin-left: 10%;
+     margin-bottom: 5px;
+     background-color: rgba(0, 0, 0, 0.5);
+     border: solid black 1px;
+     box-shadow: 1px 1px 1px black;
+     color: white;
 }
