@@ -3,7 +3,7 @@
 //pego os dados enviados pelo formulario
 $nome = $_POST['hddName'];
 $email = $_POST["emailSelect"];
-$mensagem = $_POST["emailMsg"];
+$mensagem = $_POST["textEmail"];
 $assunto = $_POST["assunto"];
 $email_from = $_POST['hddEmail'];
 //formato o campo da mensagem
@@ -33,8 +33,7 @@ $headers .= "Content-type: multipart/mixed; boundary=\"$boundary\"\r\n";
 $headers .= "$boundary\n";
 //envio o email com o anexo
 mail($email,$assunto,$mens,$headers);
-echo  "<script>alert('Mensagem enviada. possivel resposta será enviada por email.');</script>";
-header("location:..http://localhost/ecamaraProjeto/ecamara/ecamaraphonegap/www/index.html");
+
 }
 //se não tiver anexo
 else{
@@ -43,6 +42,6 @@ $headers .= "Content-type: text/html; charset=iso-8859-1\r\n";
 $headers .= "From: \"$nome\" <$email_from>\r\n";
 //envia o email sem anexo
 mail($email,$assunto,$mensagem, $headers);
-header("location:..http://localhost/ecamaraProjeto/ecamara/ecamaraphonegap/www/index.html");
+
 }
 ?>

@@ -32,6 +32,50 @@ var app = {
     //
     // The scope of 'this' is the event. In order to call the 'receivedEvent'
     // function, we must explicitly call 'app.receivedEvent(...);'
+    capturePhoto: function(){
+    navigator.camera.getPicture(onSuccess, onFail, { 
+        quality: 50,
+        destinationType: Camera.DestinationType.DATA_URL,
+        allowEdit : false,
+        saveToPhotoAlbum:true
+    });
+    
+
+    function onSuccess(imageData) {
+        document.getElementById("capture").textContent ='carregando...';
+        var image = document.getElementById('myImage');
+        image.src = "data:image/jpeg;base64,"+imageData;
+              
+        document.getElementById('arquivo').style.display="none";
+        document.getElementById("capture").textContent ='imagem carregada.';
+        document.getElementById('capture').disabled = true; 
+        document.getElementById('btnComunicar').click();
+
+    }
+    function onFail(message) {
+        alert('Failed because: ' + message);
+    }
+    },
+    getImage: function () {
+    navigator.camera.getPicture(onSuccess, onFail, { 
+    destinationType: navigator.camera.DestinationType.DATA_URL,
+    sourceType: navigator.camera.PictureSourceType.PHOTOLIBRARY
+    });
+
+    function onSuccess(imageData) {
+        document.getElementById("capture").textContent ='carregando...';
+        var image = document.getElementById('myImage');
+        image.src = "data:image/jpeg;base64,"+imageData;
+        
+        document.getElementById('arquivo').style.display="none";
+        document.getElementById("capture").textContent ='imagem carregada.';
+        document.getElementById('capture').disabled = true;
+    }
+    function onFail(message) {
+    alert("Get image failed: " + message);
+    }
+    },
+
     onDeviceReady: function() {
         app.receivedEvent('deviceready');
         

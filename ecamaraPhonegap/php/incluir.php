@@ -35,7 +35,7 @@
         
         } 
         
-         
+         mysqli_close($connection);
     
         }
  

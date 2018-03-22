@@ -8,6 +8,7 @@
 
 ?>
 <script>
+	
 	window.localStorage.removeItem('usuario');
 	window.localStorage.removeItem('emailUsuario');
 	if (window.localStorage.getItem('usuario') == null){
@@ -16,5 +17,6 @@
     alert('não foi possivel remover valores localmente.');
     window.location = "http://localhost/ecamaraProjeto/ecamara/ecamaraphonegap/www/index.html";
 	}
+	
 
 </script>

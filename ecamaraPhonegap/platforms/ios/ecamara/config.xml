@@ -53,6 +53,9 @@
     <feature name="Vibration">
         <param name="ios-package" value="CDVVibration" />
     </feature>
+    <feature name="EmailComposer">
+        <param name="ios-package" value="APPEmailComposer" />
+    </feature>
     <name>ecamara</name>
     <description>
         Hello World sample application that responds to the deviceready event.

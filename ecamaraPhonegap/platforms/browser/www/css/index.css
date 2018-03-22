@@ -5,13 +5,17 @@
 h2{
     font-family: Lora, serif, arial;
     margin left:-20px;
+    padding-bottom: 5px;
+}
+h5{
+  color: white;
 }
 header{
     margin-bottom: 15px;
     z-index: 2;
 }
 div.imglogo{
-    background: url('../../imagens/brasao.png') no-repeat;
+    background: url('brasao.png') no-repeat;
     color: transparent;
     margin-left: 15px;
     width: 40px;
@@ -95,12 +99,19 @@ input#btnAssistir{
 }
 button#btnBack{
    display: none;
-   width: 30%;
+   width: 20%;
+   height:40px;
+   padding: 5px;
    position: fixed;
    bottom: 10px;
    z-index: 9;
    margin-left: 10px;
-
+   text-align: center;
+   color: black;
+   box-shadow: 1px 1px 1px black;
+}
+button#btcadastro{
+   box-shadow: 1px 1px 1px black;
 }
 button#btnSobre{
     margin-top: 5px;
@@ -127,6 +138,51 @@ input#assunto{
 }
 button#btnSair{
   margin-top: 5px;
-  
 }
-
+button.face, .face:hover{
+  background-color: blue;
+  color: white;
+  width: 50%;
+}
+button#capture{
+  color: black;
+  margin-bottom: 20px;
+  float: right;
+  margin-top: 5px;
+  width: contain;
+  margin-left: 40%;
+}
+button#arquivo{
+  color: black;
+  margin-top:2px;
+  float: left;
+  width: 40%;
+}
+input#btnMsg{
+  margin-top: 2px;
+}
+div#load{
+  z-index: 99;
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow:auto;
+}
+img#loading{
+  position: absolute;
+  width: 100px;
+  height: 100px;
+  top:50%;
+  left:50%;
+  margin-top: -50px;
+  margin-left: -50px;
+}
+div#global{
+  display: none;
+}
+input#google{
+  float: center;
+  margin-top: 10px;
+  background-color: rgb(255, 51, 51);
+  width: 50%;
+}

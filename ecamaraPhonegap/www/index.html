@@ -16,9 +16,16 @@
   integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
   crossorigin="anonymous">
 </script>
+<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" type="text/css">
+  <script src="https://apis.google.com/js/api:client.js">
+  </script>
+</head>
 <script>
       window.onload = function(){
+        document.getElementById("load").style.display = "none";
+        document.getElementById("global").style.display = "block";
         document.getElementById("btnEnviar").onclick = validar;
+        document.getElementById("btnLogando").onclick = validarEntrar;
       }
       
       function validar(){
@@ -43,21 +50,86 @@
           return false;
         }       
       }
+      function validarEntrar(){
+        var msg = "";
+        if (document.getElementById("formEntrarEmail").value == ""){
+          msg += "Email;\n";
+        }       
+        if (document.getElementById("formEntrarSenha").value == ""){
+          msg += "Senha;\n";
+        }
+        if (msg == ""){
+          return true;
+        }else{
+          msg = "Os dados abaixo são obrigatórios: \n" + msg;
+          alert(msg);
+          return false;
+        }       
+      }
 
 </script> 
 <script>
+  //login google
 
+  var startApp = function() {
+    gapi.load('auth2', function(){
+      // Retrieve the singleton for the GoogleAuth library and set up the client.
+      auth2 = gapi.auth2.init({
+        client_id: '255784646320-ehetqq7s8m8c2t6k72p9sjtneb9bgijr.apps.googleusercontent.com',
+        cookiepolicy: 'single_host_origin',
+        // Request scopes in addition to 'profile' and 'email'
+        //scope: 'additional_scope'
+      });
+      attachSignin(document.getElementById('customBtn'));
+    });
+  };
+
+  function attachSignin(element) {
+    
+    auth2.attachClickHandler(element, {},
+        function(googleUser) {
+        var profile = googleUser.getBasicProfile();
+        var userG = profile.getGivenName();
+        var userEmailG = profile.getEmail();
+        window.localStorage.setItem('usuario', userG );
+        window.localStorage.setItem('emailUsuario', userEmailG);
+        window.location = "http://localhost/ecamaraProjeto/ecamara/ecamaraphonegap/www/index.html";
+        }, function(error) {
+          alert(JSON.stringify(error, undefined, 2));
+        });
+  }
+//sdk javascript facebook
 $(document).ready(function () {
-  //tratativas usuario logado
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId            : '857844974394585',
+      autoLogAppEvents : true,
+      xfbml            : true,
+      oauth            : true,
+      version          : 'v2.12'
+    });
+  };
+
+  (function(d, s, id){
+     var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement(s); js.id = id;
+     js.src = "https://connect.facebook.net/en_US/sdk.js";
+     fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));
+  function checkLoginState() {
+  
+  FB.getLoginStatus(function(response) {
+    statusChangeCallback(response);
+  });
+}
+
+  
+  //tratativas usuario logado. define acesso à seções
   var user = window.localStorage.getItem('usuario');
   var userEmail = window.localStorage.getItem('emailUsuario');
   
-  if(userEmail != null){
-    document.getElementById("hddEmail").value = userEmail;
-  }
-  if(user != null){
-    document.getElementById("hddName").value = user;
-  }
+
   //tratativas de comunicação json para o php da pagina de cadastro 
   $("#btnEnviar").on('click',function(){
   var txtNome=$("#txtNome").val();
@@ -88,7 +160,8 @@ $(document).ready(function () {
    });
    }return false;
    });
-  //tratativas de comunicação json para o php da pagina validarAcesso 
+
+  //comunicação json para o php da pagina validarAcesso 
   $("#btnLogando").on('click',function(){
   var formEntrarEmail=$("#formEntrarEmail").val();
   var formEntrarSenha=$("#formEntrarSenha").val();
@@ -121,6 +194,50 @@ $(document).ready(function () {
    });
    }return false;
    });
+
+  //tratativas de comunicação para mail.php
+
+  $("#btnMsg").on('click', function () {
+    if (document.getElementById("textEmail").value == "" || document.getElementById("assunto").value == ""){
+          alert('Preencha o campo de assunto e de mensagem para enviar.');
+          return false;
+    }else{
+
+      var hddName=user;
+      var hddEmail=userEmail;
+      var assunto=$("#assunto").val();
+      var textEmail=$("#textEmail").val();
+      var emailSelect=$("#emailSelect").val();
+      var arquivo = document.getElementById("myImage").src;
+       
+ 
+    var dataString="&hddName="+hddName+"&hddEmail="+hddEmail+"&assunto="+assunto+"&textEmail="+textEmail+"&emailSelect="+emailSelect+"&arquivo="+arquivo;
+    if($.trim(textEmail).length>0){
+
+     $.ajax({
+     type: "POST",
+     url:"http://localhost/ecamaraProjeto/ecamara/ecamaraphonegap/php/mail.php",
+     data: dataString,
+     crossDomain: true,
+     cache: false,
+     processData:false,
+     beforeSend: function(){ $("#btnMsg").val('Connecting...');},
+     success: function(data){
+     if(data=="success")
+     {
+     $("#btnMsg").val('submit');
+     alert("Enviado com sucesso, possivel resposta será enviada por email");
+     window.location = "http://localhost/ecamaraProjeto/ecamara/ecamaraphonegap/www/index.html";
+     }
+     else if(data=="error"){
+     alert("error");
+     }
+     }
+     });
+     }return false;
+  }
+  });
+  
 //tratativas de exibição de telas
 function turnOn (){
     $("#btnSobre").on('click', function () {
@@ -146,20 +263,26 @@ function turnOn (){
       $("#btnBack").css("display", "none");
       $("#entrarCadastrar").css("display", "block");
    var user = window.localStorage.getItem('usuario');
-   if (user !== null) {
+   
+   if (user !== null && user !== 'undefined') {
       $("#entrarCadastrar").css("display", "none");
 	}else{
 	  	$("#entrarCadastrar").css("display", "block");
 	}
+  document.getElementById('capture').innerHTML ='&#128247;';
+  document.getElementById('capture').disabled = false;
+  $('#arquivo').css("display", "block");
+  $('#arquivo').val("");
 })
     $("#btnComunicar").on('click', function () {
       var user = window.localStorage.getItem('usuario');
-      if (user !== null) {
+      
+      if (user !== null && user !== 'undefined' ) {
       	$(".page").css("display", "none");
       	$("#comunicar").css("display", "block");
       	$("#btnBack").css("display", "block");
 	  }else{
-	  	alert('É necessario \'entrar\' para falar com a câmara');
+	  	alert('É necessario \"entrar\" para falar com a câmara');
 	  }
 })
     $("#btnStream").on('click', function () {
@@ -167,19 +290,12 @@ function turnOn (){
       $("#stream").css("display", "block");
       $("#btnBack").css("display", "block");
 })
-    $("#btnMsg").on('click', function () {
-     if (document.getElementById("textEmail").value == "" || document.getElementById("assunto").value == ""){
-          alert('Preencha o campo de assunto e de mensagem para enviar.');
-          return false;
-        }else{
-        	return true;
-        }
-})
-
+    
     var user = window.localStorage.getItem('usuario');
-    if (user !== null) {
+    
+    if (user !== null && user !== 'undefined') {
          $('#bemVindo').css('display','block');
-         $('#bemVindoNome').html('<h4>Bem vindo,</h4><h4>' + user + '</h4>');
+         $('#bemVindoNome').html('<h4>Bem vindo, ' + user + '</h4>');
          $('#entrarCadastrar').css('display','none');
           }
 
@@ -191,6 +307,27 @@ function turnOn (){
 }
 turnOn();
 });
+// log in/out facebook
+function login() {
+            FB.login(function(response) {
+              FB.api('/me?fields=id,first_name,email', function(response) {
+    
+                window.localStorage.setItem('usuario', response.first_name );
+                window.localStorage.setItem('emailUsuario', response.email);
+              window.location = "http://localhost/ecamaraProjeto/ecamara/ecamaraphonegap/www/index.html";
+
+              });
+            
+
+            }, {scope: 'email,public_profile'});            
+        }
+
+function logout() {
+            FB.logout(function(response) {
+              // user is now logged out
+            });
+        }
+
 
 </script>
 
@@ -198,6 +335,7 @@ turnOn();
 
 </head>
     <body>
+      <div id="global">
 
         <header>
             <div class="navbar-brand imglogo">logo</div>
@@ -211,9 +349,7 @@ turnOn();
             </div>
         </header>
             
-            <button id="btnBack">
-                <h3>voltar</h3>
-            </button>
+            <button class="btn" id="btnBack" value="">&#9664; voltar</button>
             
 
         <div id="inicio" class="page">
@@ -238,9 +374,16 @@ turnOn();
             <input id="formEntrarEmail" class="inputs" type="email" placeholder="Digite seu Email" name="formEntrarEmail" size="30" maxlength="50" value=""><br>
             <input id="formEntrarSenha" class="inputs" type="password" placeholder="Digite sua senha" name="formEntrarSenha" size="30" maxlength="50" value=""><br><br>
             <div >&nbsp &nbsp<input class="btn btn-primary green" type="submit" id="btnLogando" value="Entrar"></div><br>
-     
+            <button onclick="javascript:login();" class="btn btn-primary face" data-size="large">Entrar com Facebook</button><br>
+            
+              <div id="customBtn" class="customGPlusSignIn">
+                <input id="google" class="btn btn-primary" type="button" value="Entrar com google" />
+              </div>
+           
+            <!--<button id="google" data-longtitle="true" class="g-signin2 btn btn-primary" data-onsuccess="onSignIn" onclick="ClickLogin()" data-theme="light"></button>--><br><br><br>
+            <h5>Não possui cadastro?</h5><button class="btn" id="btcadastro" onclick="document.getElementById('btnCadastrar').click();">Cadastre-se</button>
             </div>
-        <a href="https://www.facebook.com/v2.2/dialog/oauth?client_id=857844974394585&state=92484c5e7a7ce1a7d13d4276028b92dd&response_type=code&sdk=php-sdk-5.6.2&redirect_uri=http%3A%2F%2Flocalhost%2FecamaraProjeto%2Fecamara%2FecamaraPhonegap%2Fphp%2Fcallback.php&scope=email"><button type="button" class="btn btn-primary face">Entrar com facebook</button></a>
+            
         </div>
 
         <div id="cadastrar" class="page formulario">
@@ -265,7 +408,7 @@ turnOn();
         <div id="comunicar" class="page">
         	<div class="conteudo ">
         		<br><label>Selecione o destinatário:</label><br>
-	       <select name="emailSelect" form="emailForm">
+	       <select name="emailSelect" id="emailSelect">
 				  <option value="ouvidoria@camarataquaritinga.sp.gov.br" selected>Câmara Taquaritinga Ouvidoria</option>
 				  <option value="antoniovidal@camarataquaritinga.sp.gov.br" >Antonio Vidal da SIlva</option>
 				  <option value="professorcaio@camarataquaritinga.sp.gov.br" >Caio Edivan Ribeiro Porto</option>
@@ -284,14 +427,14 @@ turnOn();
 				  <option value="edermineiro@camarataquaritinga.sp.gov.br" >Eder Corrêa de Oliveira</option>
 				</select>
 				<br>
-				<form method="post" enctype="multipart/form-data" action="http://localhost/ecamaraProjeto/ecamara/ecamaraphonegap/php/mail.php" id="emailForm">
-				  <input type="hidden" id="hddName" name="hddName" value="">
-				  <input type="hidden" id="hddEmail" name="hddEmail" value="">
+				<div id="emailForm" enctype="multipart/form-data">
 				  <input id="assunto" class="inputs" type="text" name="assunto" placeholder="Digite o assunto" size="30" maxlength="30">
 				  <textarea id="textEmail" class="inputs" type="text" name="emailMsg" placeholder="Digite sua mensagem" size="100" maxlength="3000" ></textarea>
-				  <input name="arquivo" type="file"><br>
-				  <input class="btn btn-primary green" type="submit" id="btnMsg" value="Enviar">
-				</form>
+          <button id="arquivo" onclick="app.getImage();">Selecionar imagem</button>
+          <img src=""  style="display: none;" id="myImage" >
+          <button class="btn" id="capture" onclick="app.capturePhoto()">&#128247; </button><br>
+				  <input class="btn btn-primary green" type="submit" id="btnMsg"  value="Enviar">
+				</div>
             </div>
         </div>
 
@@ -302,12 +445,18 @@ turnOn();
             
             </div>
         </div>
+      </div>
+        <div id="load" >
+          <img src="img/Spin-1s-200px.svg" id="loading">
+        </div>
         
         <script src="cordova.js"></script>
         <script src="js/index.js"></script>
          <script>
           app.initialize();
+          startApp();
          </script>
+       
         
     </body>
 </html>
