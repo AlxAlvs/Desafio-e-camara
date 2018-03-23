@@ -338,7 +338,7 @@ function logout() {
       <div id="global">
 
         <header>
-            <div class="navbar-brand imglogo">logo</div>
+            <!--<div class="navbar-brand imglogo">logo</div>-->
             <div id="nome">
             <h2>E - câmara</h2> 
             <div id="bemVindo"><div id="bemVindoNome"></div> &nbsp<a href="http://localhost/ecamaraProjeto/ecamara/ecamaraphonegap/php/sair.php"><button id="btnSair"  class="logInOut btn whiteButton">Sair</button></a></div>           
@@ -353,6 +353,7 @@ function logout() {
             
 
         <div id="inicio" class="page">
+          <div id="imgFundo">
 
             <button id="btnSobre" class="btn opçao">
                 <h3>Sobre</h3>
@@ -365,7 +366,7 @@ function logout() {
             <button id="btnStream" class="btn opçao">
                 <h3>Assista à transmissão</h3>
             </button>
-
+            </div>
         </div>
         
 
@@ -377,7 +378,7 @@ function logout() {
             <button onclick="javascript:login();" class="btn btn-primary face" data-size="large">Entrar com Facebook</button><br>
             
               <div id="customBtn" class="customGPlusSignIn">
-                <input id="google" class="btn btn-primary" type="button" value="Entrar com google" />
+                <button id="google" class="btn btn-primary" type="button" value="" />Entrar com google</button>
               </div>
            
             <!--<button id="google" data-longtitle="true" class="g-signin2 btn btn-primary" data-onsuccess="onSignIn" onclick="ClickLogin()" data-theme="light"></button>--><br><br><br>

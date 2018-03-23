@@ -1,6 +1,7 @@
 *{
     margin: 0;
     font-family: Lora, serif, arial;
+    overflow-y: hidden;
 }
 h2{
     font-family: Lora, serif, arial;
@@ -56,7 +57,7 @@ button.green{
 }
 div.formulario{
     z-index: 3;
-    background: #3B3B98;
+    background: #4a69bd;
 }
 div.conteudo{
     width: 80%;
@@ -68,19 +69,22 @@ input.inputs{
 }
 #inicio{
     display: block;
-    background: url('brasaoFundo.jpg') no-repeat;
+    background: url('brasaoFundo.jpg') no-repeat center top;
+}
+div#imgFundo{
+
 }
 #descricao{
-   background:#1e3799;
+   background:#4a69bd;
    color: white;
 }
 #comunicar{
-   background:#1e3799;
+   background:#4a69bd;
    color: white;
    height: 150%;
 }
 #stream{
-   background:#1e3799;
+   background:#4a69bd;
    color: white;
 }
 input#btnAssistir{
@@ -104,9 +108,6 @@ button#btnBack{
    color: black;
    box-shadow: 1px 1px 1px black;
 }
-button#btcadastro{
-   box-shadow: 1px 1px 1px black;
-}
 button#btnSobre{
     margin-top: 5px;
 }
@@ -119,7 +120,6 @@ div#bemVindo{
 select{
   color: black;
   margin-bottom: 5px;
-  
 }
 textarea{
   color: black;
@@ -174,16 +174,18 @@ img#loading{
 div#global{
   display: none;
 }
-input#google{
-  float: center;
+button#google{
   margin-top: 10px;
-  background-color: rgb(255, 51, 51);
+  margin-bottom: 2px;
+  background-color: #e55039;
+  color: white;
   width: 50%;
 }
 button.whiteButton{
   background-color: white;
   color: black;
   border: solid black 2px;
+  box-shadow: 1px 1px 1px black;
 }
 button.opçao,.opçao:visited,.opçao:target,.opçao:hover,.opçao:active{
   width: 80%;

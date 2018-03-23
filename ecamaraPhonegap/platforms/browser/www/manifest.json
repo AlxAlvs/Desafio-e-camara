@@ -4,8 +4,15 @@
   "name": "ecamara",
   "short_name": "ecamara",
   "version": "com.alxalvs",
-  "description": "Hello World sample application that responds to the deviceready event.",
-  "author": "PhoneGap Team",
-  "icons": [],
+  "description": "App Desafio e-câmara",
+  "author": "Alex Alves da Silva",
+  "icons": [
+    {
+      "src": "icon.png",
+      "type": "image/png",
+      "sizes": "undefinedxundefined"
+    }
+  ],
+  "orientation": "any",
   "start_url": "index.html"
 }
