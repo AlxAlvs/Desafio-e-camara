@@ -4,15 +4,8 @@
   "name": "ecamara",
   "short_name": "ecamara",
   "version": "com.alxalvs",
-  "description": "App Desafio e-câmara",
-  "author": "Alex Alves da Silva",
-  "icons": [
-    {
-      "src": "icon.png",
-      "type": "image/png",
-      "sizes": "undefinedxundefined"
-    }
-  ],
-  "orientation": "any",
+  "description": "Desafio E-câmara",
+  "author": "Alex Alves",
+  "icons": [],
   "start_url": "index.html"
 }
